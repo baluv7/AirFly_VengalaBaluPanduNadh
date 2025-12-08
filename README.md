@@ -1,30 +1,124 @@
-# AirFly Insights Project Milestone_1
+# ✈️ AirFly Insights: Airline Performance & Operations Analysis
 
-## Objective:
-Analyze airline flight data to uncover trends in delays, cancellations, and operational patterns, providing actionable insights for airline operators and stakeholders through data visualization.
+**AirFly Insights** is an end-to-end data analytics project focused on studying flight delays, cancellations, and route behavior. By processing raw aviation data with **Python** and visualizing it in **Microsoft Power BI**, this project transforms complex operational logs into interactive dashboards that support decision-making for airline stakeholders.
 
-## Current Status:
-### Milestone 1: Data Foundation and Cleaning
-- **Week 1:** Loaded dataset and explored schema, types, null values, and size.
-- **Week 2:** Preprocessed data by handling missing values, creating new features (Month, Day of Week, etc.), and formatting datetime columns.
+---
 
-**Deliverables:** Cleaned dataset, preprocessing summary, and feature dictionary.
+## 📌 Project Statement
 
-### Exploratory Data Analysis (EDA)
-**Objective:** Understand the dataset, handle missing data, and explore relationships.
+The goal of this project is to analyze large-scale airline flight data to uncover operational trends, delay patterns, cancellation behavior, and route efficiency.
 
-**Tasks:** Load data, analyze distributions, detect outliers, and visualize key relationships.
+**Key Questions Addressed:**
+* What causes flight delays?
+* Which airports experience the most cancellations?
+* How do delays vary by hour, distance, season, and airline?
+* Which routes perform efficiently and which require improvement?
 
-### Data Preprocessing
-**Objective:** Clean and prepare the data for visualization.
+---
 
-**Tasks:** Remove duplicates, handle missing values, convert data types, create new features, and aggregate data where necessary.
+## 💾 Dataset
 
-**Deliverable:** Cleaned, preprocessed dataset ready for visualization.
+* **Source:** Kaggle Airlines Flights Data
+* **Scale:** 60M+ rows (sampled for dashboarding)
+* **Key Attributes:**
+  * Airline, Origin & Destination Airports
+  * Scheduled vs. Actual Departure/Arrival
+  * Delay Minutes & Reasons
+  * Cancellation & Diverted Flags
+  * Distance & Route
 
-## Next Steps:
-1. **Define KPIs** for dashboard based on delays, cancellations, and routes.
-2. **Develop dashboard prototype** to visualize insights.
+**Files:**
+* `New_flight_delays.csv` — Raw dataset
+* `cleaned_flight_delays.csv` — Intermediate cleaned dataset
+* `final_flight_delays_for_dashboard.csv` — Final processed dataset used in Power BI
 
-## Resources:
-- [Dataset Link](https://drive.google.com/file/d/1EgkwVZqCbpITmeMyXLyLSyZ_vPOY4tnX/view?usp=drive_link)
+---
+
+## 🛠️ Data Processing Workflow
+
+All cleaning and feature engineering were performed in **Python** using Pandas and NumPy (`AirFly_Insight.ipynb`).
+
+### 1. Data Cleaning
+* **Imputation:** Filled missing `DelayReason` with "Not Delay" and `DelayMinutes` with 0.
+* **Formatting:** Converted datetime columns using `pd.to_datetime()`.
+* **Sanitization:** Removed duplicate rows and extreme delays (> 300 minutes).
+
+### 2. Outlier Handling
+* Applied **Interquartile Range (IQR)** capping for numeric columns.
+* Replaced values falling outside the `Q1 – 1.5×IQR` and `Q3 + 1.5×IQR` range.
+
+### 3. Feature Engineering
+Generated new fields to enhance drill-down capabilities:
+* **Time Features:** Year, Month, Day, Hour, Minute, Day of Week, Season.
+* **Route Feature:** Created "Origin-Destination" string (e.g., *ATL-JFK*).
+* **Encoding:** Applied label encoding to the `Airline` column.
+* **Aggregations:** Calculated monthly average delays, average distances, and total cancellations.
+
+### 4. Exploratory Data Analysis (EDA)
+Performed using **Matplotlib** and **Seaborn**:
+* Delay distribution histograms.
+* Cancellation count bar plots.
+* Delay vs. Distance scatter plots.
+* Correlation heatmaps and box plots for outlier detection.
+
+---
+
+## 📊 Power BI Dashboards
+
+The project includes four dashboards (`AIRFLY_INSIGHT.pbix`), each targeting a specific operational area.
+
+### 1. Overview & Operational Metrics
+* **Purpose:** High-level fleet performance summary.
+* **Key Visuals:** Average Delay (~10 mins), Total Cancellations (~1.75M).
+* **Insights:** Delay reasons (Weather, Maintenance, ATC) are distributed evenly. **Southwest** and **Delta** contribute the highest total delay minutes.
+
+### 2. Delay Analysis & Performance
+* **Purpose:** Time-based delay behavior.
+* **Insights:** Delays **peak during afternoon hours**. Each delay reason category contributes roughly ~33% to the total.
+
+### 3. Route & Airport Exploration
+* **Purpose:** Geographical efficiency analysis.
+* **Insights:** Distance does **not** strongly correlate with delay time. High-volume routes include **ORD-JFK**, **ATL-MIA**, and **DFW-SEA**.
+
+### 4. Cancellation Insights & Trends
+* **Purpose:** Identifying cancellation hotspots.
+* **Insights:**
+  * **Top Cancellation Hubs:** Chicago (ORD ~350K) and Atlanta (ATL ~349K).
+  * LAX, JFK, and DFW follow closely.
+  * The "Not Delay" category often indicates operational/scheduling cancellations.
+
+---
+
+## 🚀 Key Results & Conclusions
+
+* **Average Delay Time:** ~10 minutes
+* **Total Cancellations:** ~1.75 million
+* **Primary Disruption Factors:** Weather and Air Traffic Control.
+* **Critical Hubs:** Chicago (ORD) and Atlanta (ATL) are the most prone to cancellations.
+* **Temporal Patterns:** Peak delays consistently occur in the **afternoon and evening**.
+
+---
+
+## 💻 Technologies Used
+
+* **Language:** Python 🐍 (Pandas, NumPy, Scikit-learn)
+* **Visualization:** Matplotlib, Seaborn (EDA)
+* **Business Intelligence:** Microsoft Power BI 📊
+* **Environment:** Jupyter Notebook / Google Colab
+
+---
+
+## 📂 Repository Contents
+
+| File Name | Description |
+| :--- | :--- |
+| `AirFly_Insight.ipynb` | Full code for data cleaning, preprocessing, and feature engineering. |
+| `AIRFLY_INSIGHT.pbix` | The interactive Power BI dashboard file. |
+| `final_flight_delays_for_dashboard.csv` | Cleaned dataset used for the dashboards. |
+| `Airfly_Insight01-04.png` | Screenshots of the dashboards. |
+
+---
+
+## 🔗 Links
+
+* **GitHub Repository:** [https://github.com/baluv7/AirFly_VengalaBaluPanduNadh](https://github.com/baluv7/AirFly_VengalaBaluPanduNadh)
